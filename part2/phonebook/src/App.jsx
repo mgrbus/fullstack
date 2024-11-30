@@ -3,6 +3,7 @@ import { create, remove, update, getAll } from './services/persons'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import Content from './components/Content'
+import AddingNotification from './components/AddingNotification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -10,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [searchName, setSearchName] = useState('')
   const [filteredPersons, setFilteredPersons] = useState([])
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     getAll().then(recievedPersons => setPersons(recievedPersons))
@@ -39,11 +41,21 @@ const App = () => {
         update(id, updatedPerson)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id === id ? returnedPerson : person))
-          })
+            setMessage(`${returnedPerson.name} got new number ${returnedPerson.number}`)
+            setTimeout(() => setMessage(null), 5000)
+           })
+           .catch(error => {
+            alert(`Person ${newName} was already deleted from server`)
+            setPersons(persons.filter(p=>p.id!==id))
+           })
       }
     } else {
       create(newPerson)
-        .then(returnedData => setPersons(persons.concat(returnedData)))
+        .then(returnedData => {
+          setPersons(persons.concat(returnedData))
+          setMessage(`Added ${returnedData.name}`)
+          setTimeout(() => setMessage(null), 5000)
+        })
     }
     setNewName('')
     setNewNumber('')
@@ -61,7 +73,7 @@ const App = () => {
 
   const filterPersons = () => {
     setFilteredPersons(persons.filter(person => person.name.toLowerCase() === searchName.toLowerCase()))
-    setTimeout(()=>setFilteredPersons([]),5000)
+    setTimeout(() => setFilteredPersons([]), 5000)
     setSearchName('')
   }
 
@@ -69,6 +81,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <AddingNotification message={message} />
       <Filter filterPersons={filterPersons} handleSearchName={handleSearchName} searchName={searchName} filteredPersons={filteredPersons} />
       <Content addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>

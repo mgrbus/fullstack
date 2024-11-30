@@ -1,24 +1,14 @@
 {
   "persons": [
     {
-      "id": "9e9c",
-      "name": "asja",
-      "number": "12"
-    },
-    {
-      "id": "cde2",
-      "name": "mini",
-      "number": "9898"
-    },
-    {
       "id": "4ff3",
       "name": "darko",
       "number": "123"
     },
     {
-      "id": "e06b",
-      "name": "mijiij",
-      "number": ""
+      "id": "0eef",
+      "name": "mciii",
+      "number": "876"
     }
   ]
 }
