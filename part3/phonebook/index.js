@@ -1,6 +1,14 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
+
 app.use(express.json())
+app.use(morgan('tiny'))
+morgan.token('type', ((req,res) => {
+    if (req.method==='POST') {
+         console.log(req.body)
+    }
+}))
 
 let persons = [
     {
@@ -24,6 +32,8 @@ let persons = [
         "number": "393-6423122"
     }
 ]
+
+app.use(morgan(':type'))
 
 app.get('/api/persons', (req, res) => {
     res.json(persons)
