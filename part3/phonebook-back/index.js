@@ -1,3 +1,5 @@
+require('dotenv').config()
+const Person = require('./models/person')
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
@@ -40,7 +42,9 @@ let persons = [
 app.use(morgan(':type'))
 
 app.get('/api/persons', (req, res) => {
-    res.json(persons)
+    Person.find({}).then(person => {
+        res.json(person)
+    })
 })
 
 app.get('/api/persons/info', (req, res) => {
@@ -49,9 +53,9 @@ app.get('/api/persons/info', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-    const id = req.params.id
-    const person = persons.find(p => p.id === id)
-    person ? res.json(person) : res.status(404).end()
+    Person.findById(req.params.id).then(person => {
+        res.json(person)
+    })
 })
 
 app.delete('/api/persons/:id', (req, res) => {
@@ -69,7 +73,7 @@ const generateId = () => {
 }
 
 app.post('/api/persons', (req, res) => {
-
+    const body = req.body
     const name = req.body.name
     const number = req.body.number
     const newPerson = { id: generateId(), name: name, number: number }
@@ -86,9 +90,14 @@ app.post('/api/persons', (req, res) => {
         })
     }
 
-    persons = persons.concat(newPerson)
-    res.json(newPerson)
+    const person = new Person({
+        name: body.name,
+        number: body.number
+    })
 
+    person.save().then(savedPerson => {
+        res.json(savedPerson)
+    })
 })
 
 const PORT = process.env.PORT || 3001
