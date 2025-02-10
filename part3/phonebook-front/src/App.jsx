@@ -56,6 +56,10 @@ const App = () => {
           setMessage(`Added ${returnedData.name}`)
           setTimeout(() => setMessage(null), 5000)
         })
+        .catch(error=>{
+          alert('Name must me minimum three characters long')
+          console.log(error.response.data.error)
+        })
     }
     setNewName('')
     setNewNumber('')
