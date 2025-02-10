@@ -9,6 +9,7 @@ const getAll = () => {
 const create = (newPerson) => {
     const request = axios.post(baseURL, newPerson)
     return request.then(response => response.data)
+    .catch(error=>console.log(error.response.data.error))
 }
 
 const remove = (id) => {
