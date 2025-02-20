@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyffJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNpZnJhIiwiaWQiOiI2N2I1YTUyNzk3MTRjZjk3YWEyMzIyODciLCJpYXQiOjE3NDAwNTk3OTUsImV4cCI6MTc0MDA2MzM5NX0.ZKlDTiRpSI80cbHRcRj39rU2g7jnDck-Vy4uhcQBEF8
 
 {
-    "title":"darko",
-    "author":"micko",
-    "url":"sdsfdij323i2",
-    "likes":78,
-    "id":"5"
+    "title":"zadnjizzzzzzdarko",
+    "url":"miajdijdijs",
+    "author":"jakjki",
+    "userId":"12345"
 }
